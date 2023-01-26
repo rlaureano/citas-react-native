@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Modal, Text, SafeAreaView, StyleSheet, TextInput, View, ScrollView } from 'react-native'
+import { Modal, Text, SafeAreaView, StyleSheet, TextInput, View, ScrollView, Pressable } from 'react-native'
 import DatePicker from 'react-native-date-picker'
 
-const Formulario = ({modalVisible}) => {
+const Formulario = ({modalVisible, setModalVisible}) => {
 
     const [ paciente, setPaciente ] = useState('')
     const [ propietario, setPropietario ] = useState('')
@@ -21,6 +21,10 @@ const Formulario = ({modalVisible}) => {
                 <Text style={styles.titulo}>Nueva {''}
                     <Text style={styles.tituloBold}>Cita</Text>
                 </Text>
+
+                <Pressable style={styles.btnCancelar} onLongPress={ () => setModalVisible(false)}>
+                    <Text style={styles.btnCancelarTexto}>X Cancelar</Text>
+                </Pressable>
                 
                 <View style={styles.campo}>
                     <Text style={styles.label}>Nombre del paciente</Text>
@@ -72,7 +76,7 @@ const Formulario = ({modalVisible}) => {
                 <View style={styles.campo}>
                     <Text style={styles.label}>Fecha alta</Text>
                     <View style={styles.fechaContenedor}>
-                        <DatePicker date={fecha}/>
+                        <DatePicker date={fecha} onDateChange={ date => setFecha(date)} locale='es'/>
                     </View>
                 </View>
                 
@@ -88,6 +92,10 @@ const Formulario = ({modalVisible}) => {
                         numberOfLines={4}
                     />
                 </View>
+
+                <Pressable style={styles.btnNuevaCita}>
+                    <Text style={styles.btnNuevaCitaTexto}>Agregar Cita</Text>
+                </Pressable>
 
             </ScrollView>
         </SafeAreaView>
@@ -110,6 +118,20 @@ const styles = StyleSheet.create({
     tituloBold: {
         fontWeight: '900'
     },
+    btnCancelar: {
+        marginVertical: 30,
+        backgroundColor: '#5827A4',
+        marginHorizontal: 30,
+        padding: 15,
+        borderRadius: 10
+    },  
+    btnCancelarTexto: {
+        color: '#FFF',
+        textAlign: 'center',
+        fontWeight: '900',
+        fontSize: 16,
+        textTransform: 'uppercase'
+    },
     campo: {
         marginTop: 10,
         marginHorizontal: 30
@@ -131,6 +153,21 @@ const styles = StyleSheet.create({
     },
     fechaContenedor: {
         backgroundColor: '#FFF',
+        borderRadius: 10
+    },
+    btnNuevaCita: {
+        marginVertical: 50,
+        backgroundColor: '#F59E0B',
+        paddingVertical: 15,
+        marginHorizontal: 30,
+        borderRadius: 10
+    },
+    btnNuevaCitaTexto: {
+        textAlign: 'center',
+        color: '#5827A4',
+        textTransform: 'uppercase',
+        fontWeight: '700',
+        fontSize: 16
     }
 })
 export default Formulario

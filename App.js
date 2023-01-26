@@ -43,6 +43,7 @@ const App = () => {
       </Pressable>
       <Formulario 
         modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
       />  
     </SafeAreaView>
   );
