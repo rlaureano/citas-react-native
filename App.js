@@ -24,11 +24,8 @@ import Formulario from './src/components/Formulario';
 const App = () => {
 
   const [ modalVisible, setModalVisible ] = useState(false)
-
-  const nuevaCitaHandler = () => {
-    console.log(true)
-  }
-
+  const [ pacientes, setPacientes ] = useState([])
+  console.log(pacientes)
   return (
     <SafeAreaView style={styles.container}> 
       <Text style={styles.title}> Administrador de citas {' '}
@@ -44,6 +41,8 @@ const App = () => {
       <Formulario 
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
+        pacientes={pacientes}
+        setPacientes={setPacientes}
       />  
     </SafeAreaView>
   );
