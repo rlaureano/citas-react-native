@@ -13,8 +13,10 @@ import {
   StyleSheet,
   Text,
   Pressable,
+  FlatList
 } from 'react-native';
 import Formulario from './src/components/Formulario';
+import Paciente from './src/components/Paciente';
 
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
@@ -38,6 +40,18 @@ const App = () => {
       >
         <Text style={styles.btnTextoNuevaCita} >Nueva cita</Text>
       </Pressable>
+
+      {
+        !pacientes?.length ? 
+          <Text style={styles.noPacientes}>No hay pacientes aún</Text> :
+          <FlatList
+            style={styles.listado}
+            data={pacientes}
+            keyExtractor={ item => item.id}
+            renderItem={ ({item}) => <Paciente item={item}/> }
+          />
+      }
+
       <Formulario 
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
@@ -76,6 +90,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '900',
     textTransform: 'uppercase'
+  },
+  noPacientes: {
+    marginTop: 40,
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: '600'
+  },
+  listado: {
+    marginTop: 50,
+    marginHorizontal: 30
   }
 });
 
