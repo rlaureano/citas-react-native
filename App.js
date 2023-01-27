@@ -14,11 +14,12 @@ import {
   Text,
   Pressable,
   FlatList,
-  Alert
+  Alert,
+  Modal
 } from 'react-native';
 import Formulario from './src/components/Formulario';
 import Paciente from './src/components/Paciente';
-
+import InformacionPaciente from './src/components/InformacionPaciente';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
@@ -29,6 +30,7 @@ const App = () => {
   const [ modalVisible, setModalVisible ] = useState(false)
   const [ pacientes, setPacientes ] = useState([])
   const [ paciente, setPaciente ] = useState({})
+  const [ modalPaciente, setModalPaciente ] = useState(false)
 
   const pacienteEditar = id => {
     setModalVisible(true)
@@ -39,7 +41,7 @@ const App = () => {
   const pacienteEliminar = id => {
     
     Alert.alert(
-      '¿deseas eliminar esta paciente?',
+      '¿Deseas eliminar este paciente?',
       'Un paciente eliminado no se puede recuperar',
       [
         { text: 'Cancelar'},
@@ -72,7 +74,9 @@ const App = () => {
             keyExtractor={ item => item.id}
             renderItem={ ({item}) => 
               <Paciente item={item} pacienteEditar={pacienteEditar} 
-                setModalVisible={setModalVisible} pacienteEliminar={pacienteEliminar}/> 
+                setModalVisible={setModalVisible} pacienteEliminar={pacienteEliminar}
+                setModalPaciente={setModalPaciente} setPaciente={setPaciente}
+              /> 
             }
           />
       }
@@ -85,6 +89,16 @@ const App = () => {
         paciente={paciente}
         setPaciente={setPaciente}
       />  
+
+      <Modal
+        visible={modalPaciente}
+        animationType='fade'
+      >
+        <InformacionPaciente
+          paciente={paciente}
+          setModalPaciente={setModalPaciente}
+        /> 
+      </Modal>
     </SafeAreaView>
   );
 };
