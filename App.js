@@ -13,7 +13,8 @@ import {
   StyleSheet,
   Text,
   Pressable,
-  FlatList
+  FlatList,
+  Alert
 } from 'react-native';
 import Formulario from './src/components/Formulario';
 import Paciente from './src/components/Paciente';
@@ -27,7 +28,28 @@ const App = () => {
 
   const [ modalVisible, setModalVisible ] = useState(false)
   const [ pacientes, setPacientes ] = useState([])
-  console.log(pacientes)
+  const [ paciente, setPaciente ] = useState({})
+
+  const pacienteEditar = id => {
+    setModalVisible(true)
+    const pacienteEditar = pacientes.find( paciente => paciente?.id === id )
+    setPaciente(pacienteEditar)
+  }
+
+  const pacienteEliminar = id => {
+    
+    Alert.alert(
+      '¿deseas eliminar esta paciente?',
+      'Un paciente eliminado no se puede recuperar',
+      [
+        { text: 'Cancelar'},
+        { text: 'Sí, eliminar', onPress: () => {
+          const pacientesActualizado = pacientes.filter( paciente => paciente?.id !== id )
+          setPacientes(pacientesActualizado)      
+        }}
+      ]
+    )
+  }
   return (
     <SafeAreaView style={styles.container}> 
       <Text style={styles.title}> Administrador de citas {' '}
@@ -48,7 +70,10 @@ const App = () => {
             style={styles.listado}
             data={pacientes}
             keyExtractor={ item => item.id}
-            renderItem={ ({item}) => <Paciente item={item}/> }
+            renderItem={ ({item}) => 
+              <Paciente item={item} pacienteEditar={pacienteEditar} 
+                setModalVisible={setModalVisible} pacienteEliminar={pacienteEliminar}/> 
+            }
           />
       }
 
@@ -57,6 +82,8 @@ const App = () => {
         setModalVisible={setModalVisible}
         pacientes={pacientes}
         setPacientes={setPacientes}
+        paciente={paciente}
+        setPaciente={setPaciente}
       />  
     </SafeAreaView>
   );
