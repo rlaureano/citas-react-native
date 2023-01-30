@@ -1,22 +1,11 @@
 import React from 'react'
 import { Text, View, StyleSheet, Pressable } from 'react-native'
+import { formatearFeacha } from '../helpers/inde'
 
 const Paciente = ({item, pacienteEditar, pacienteEliminar, setModalPaciente, setPaciente}) => {
 
     const { paciente, fecha, id } = item
     
-    const formatearFeach = fecha => {
-        const nuevaFecha = new Date(fecha)
-        const opciones = {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }
-
-        return nuevaFecha.toLocaleDateString('es-Es', opciones)
-    }
-
     const handleInformacionPaciente = () => {
         setModalPaciente(true)
         setPaciente(item)
@@ -27,7 +16,7 @@ const Paciente = ({item, pacienteEditar, pacienteEliminar, setModalPaciente, set
             <View style={styles.contenedor}>
                 <Text style={styles.label}>Paciente:</Text>
                 <Text style={styles.texto}>{paciente}</Text>
-                <Text style={styles.fecha}>{formatearFeach(fecha)}</Text>
+                <Text style={styles.fecha}>{formatearFeacha(fecha)}</Text>
 
                 <View style={styles.contenedorBotones}>
                     <Pressable style={[styles.btn, styles.btnEditar]}>

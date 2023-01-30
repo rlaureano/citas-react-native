@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { Modal, Text, SafeAreaView, StyleSheet, TextInput, View, ScrollView, Pressable, Alert } from 'react-native'
 import DatePicker from 'react-native-date-picker'
 
-const Formulario = ({modalVisible, setModalVisible, pacientes, setPacientes, 
-    paciente: pacienteObj, setPaciente: setPacienteApp }) => {
+const Formulario = ({modalVisible, pacientes, setPacientes, 
+    paciente: pacienteObj, setPaciente: setPacienteApp, cerrarModal}) => {
 
     const [ paciente, setPaciente ] = useState('')
     const [ id, setId ] = useState('')
@@ -49,7 +49,7 @@ const Formulario = ({modalVisible, setModalVisible, pacientes, setPacientes,
         }
 
         limpiarformulario()
-        setModalVisible(false)
+        cerrarModal()
     }
 
     useEffect( () => {
@@ -66,7 +66,7 @@ const Formulario = ({modalVisible, setModalVisible, pacientes, setPacientes,
 
     const handleCancelar = () => {
         setPacienteApp({})
-        setModalVisible(false)
+        cerrarModal()
         limpiarformulario()
     }
 
